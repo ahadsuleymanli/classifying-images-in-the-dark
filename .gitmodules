@@ -1,0 +1,3 @@
+[submodule "day_night_images"]
+	path = day_night_images
+	url = git@github.com:ahadsuleymanli/day_night_images.git
