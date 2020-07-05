@@ -18,9 +18,17 @@ from helpers import add_extra_tests
 MODEL_DIR = "saved_models/svm_model.pkl"
 
 
-def get_saved_svm():
-    print("Using saved model...")
-    return pickle.load(open(MODEL_DIR, "rb"))
+def get_saved_svm(name=None):
+    print("Loading SVM saved model...")
+    svm = pickle.load(open(MODEL_DIR, "rb"))
+    print("Loaded")
+    return svm
+
+def get_prediction(svm,image):
+    x = h_histogram(image)
+    x = x.reshape(1, -1)
+    return svm.predict(x)[0]
+    
 
 if __name__ == "__main__":
     argparser = ap.ArgumentParser(description="Trains the SVM model")

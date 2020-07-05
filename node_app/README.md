@@ -1,0 +1,1 @@
+Single page app that acts as the frontend for my inference backend.
