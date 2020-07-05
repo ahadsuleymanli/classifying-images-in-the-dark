@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 from os import path
 
-IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),'day_night_images')
+IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),os.pardir,'day_night_images')
 CLASS_DIRS = {
     "day": path.join(IMAGE_DIR,'day'), 
     "night": path.join(IMAGE_DIR,'night')
@@ -63,6 +63,11 @@ def just_image(image_file):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img
 
+def image_sized_down(image_file):
+    img = just_image(image_file)
+    img = cv2.resize(img, (28,28))
+    return img
+
 def read_files(feature_function,CLASS_DIRS=CLASS_DIRS):
     '''
         feature_function: the function that reads the image and extracts a feature
@@ -80,7 +85,7 @@ def read_files(feature_function,CLASS_DIRS=CLASS_DIRS):
     return np.asarray(feature_list), np.asarray(label_list)
 
 def add_extra_tests(feature_function,X_test,y_test):
-    IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),'extra_tests')
+    IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),os.pardir,'extra_tests')
     TEST_DIRS = {
         "day": os.path.join(IMAGE_DIR,'day'), 
         "night": os.path.join(IMAGE_DIR,'night')
@@ -89,6 +94,15 @@ def add_extra_tests(feature_function,X_test,y_test):
     X_test = np.append(X_test, X_test_extra,0)
     y_test = np.append(y_test, y_test_extra,0)
     return X_test, y_test
+
+def get_extra_tests(feature_function):
+    IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),os.pardir,'extra_tests')
+    TEST_DIRS = {
+        "day": os.path.join(IMAGE_DIR,'day'), 
+        "night": os.path.join(IMAGE_DIR,'night')
+    }
+    X_test_extra, y_test_extra = read_files(feature_function,TEST_DIRS)
+    return X_test_extra, y_test_extra
 
 if __name__ == "__main__":
     imgs, labels = read_files(feature_function=h_histogram)

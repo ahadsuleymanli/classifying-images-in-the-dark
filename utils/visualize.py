@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os import path
 
-IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),'day_night_images')
+IMAGE_DIR = path.join(path.dirname(path.realpath(__file__)),os.pardir,'day_night_images')
 DAY_DIR = path.join(IMAGE_DIR,'day')
 NIGHT_DIR = path.join(IMAGE_DIR,'night')
 

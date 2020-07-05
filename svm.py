@@ -13,8 +13,8 @@ import time
 import pickle
 import argparse as ap
 
-from helpers import read_files, flat_intensities, v_histogram, h_histogram
-from helpers import add_extra_tests
+from utils.helpers import read_files, flat_intensities, v_histogram, h_histogram
+from utils.helpers import add_extra_tests
 MODEL_DIR = "saved_models/svm_model.pkl"
 
 
