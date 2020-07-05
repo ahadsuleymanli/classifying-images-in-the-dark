@@ -1,3 +1,7 @@
+"""
+    LeNet taken from https://github.com/imneonizer/day-night-classification/blob/master/utils/lenet.py
+"""
+
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D

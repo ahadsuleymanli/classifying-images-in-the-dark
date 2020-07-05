@@ -28,11 +28,11 @@ def post_image():
     try:
         base64_decoded = base64.b64decode(x)
         image = Image.open(io.BytesIO(base64_decoded))
-        image_np = np.array(image)
-        result = inference_server.classify(image_np)
     except:
-        result = "incorrect image format"
-    
+        return json.dumps({"result": "incorrect image format"}), 201
+        
+    image_np = np.array(image)
+    result = inference_server.classify(image_np)
     return json.dumps({"result": result}), 201
 
 @api.route('/changemodel', methods=['POST'])

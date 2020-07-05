@@ -1,6 +1,7 @@
 from abc import ABC
 from threading import Thread, Event, Lock
 import svm
+import dnn
 import time 
 
 class Model(ABC):
@@ -20,8 +21,16 @@ class SVMModel(Model):
     def classify(self,image):
         return svm.get_prediction(self.svm, image)
 
+class CNNModel(Model):
+    def __init__(self):
+        self.model = dnn.get_saved_model()
+    def classify(self,image):
+        return dnn.get_prediction(self.model, image)
+
+
 Model.FACTORY["svm"] = SVMModel
 Model.FACTORY["svm2"] = SVMModel
+Model.FACTORY["dnn"] = CNNModel
 
 class InferenceServer:
     """
@@ -53,6 +62,8 @@ class InferenceServer:
             self.load_model_name = None
 
             with self.model_lock:
+                # TODO the memory does not release, investigate
+                del self.model
                 self.model = model_temp
 
             self.load_event.clear()
