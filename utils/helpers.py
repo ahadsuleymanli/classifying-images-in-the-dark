@@ -31,16 +31,14 @@ def flat_intensities(image_file):
     return img
 
 def _histogram(image_file,channel):
-    '''
-        if is an image, needs to be BGR
-    '''
     if isinstance(image_file, str):
         img = cv2.imread(image_file)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     elif isinstance(image_file,np.ndarray):
         img = image_file
     else:
         raise Exception("Has to be a path or np array")
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
     hist = cv2.calcHist([img],[channel],None,[HISTOGRAM_BINS],[0,256])
     hist = hist.flatten()
     hist = hist/sum(hist)

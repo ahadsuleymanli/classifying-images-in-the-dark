@@ -38,6 +38,7 @@ def get_prediction(model,image):
 if __name__ == "__main__":
     # set the matplotlib backend so figures can be saved in the background
     matplotlib.use("Agg")
+    random.seed(42)
     ap = argparse.ArgumentParser()
     ap.add_argument("-e", "--epochs", type=int, default=20, required=False)
     ap.add_argument("-p", "--plot", type=str, default="plot.png",help="path to output loss/accuracy plot")
@@ -102,7 +103,6 @@ if __name__ == "__main__":
     label_array = [1 if x == "day" else 0 for x in label_array]
     label_array = np.array(label_array)
     y_test = to_categorical(label_array, num_classes=2) 
-    print("categorical",y_test)
     x_test = image_array
     print("Evaluate on extra_tests data")
     results = model.evaluate(x_test, y_test, batch_size=128)

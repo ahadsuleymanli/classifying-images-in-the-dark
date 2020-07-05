@@ -1,7 +1,13 @@
+"""
+	Author: Ahad Suleymanli
+
+"""
+
 from abc import ABC
 from threading import Thread, Event, Lock
 import svm
 import dnn
+import dnn2
 import time 
 
 class Model(ABC):
@@ -27,10 +33,16 @@ class CNNModel(Model):
     def classify(self,image):
         return dnn.get_prediction(self.model, image)
 
+class CNN2Model(Model):
+    def __init__(self):
+        self.model = dnn2.get_saved_model()
+    def classify(self,image):
+        return dnn2.get_prediction(self.model, image)
+
 
 Model.FACTORY["svm"] = SVMModel
-Model.FACTORY["svm2"] = SVMModel
 Model.FACTORY["dnn"] = CNNModel
+Model.FACTORY["dnn2"] = CNN2Model
 
 class InferenceServer:
     """
@@ -42,7 +54,7 @@ class InferenceServer:
         self.load_event = Event()
         self.load_event.set()
 
-        self.load_model_name = "svm" # default model
+        self.load_model_name = "dnn2" # default model
 
         # load_worker waits in the background and does model loading when requested
         Thread(target=self.load_worker,daemon=True).start()
