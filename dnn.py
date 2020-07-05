@@ -12,6 +12,7 @@ import argparse
 import random
 import cv2
 import os
+import math
 
 from utils.helpers import read_files, flat_intensities, v_histogram, h_histogram, image_sized_down
 from utils.helpers import get_extra_tests
@@ -27,11 +28,10 @@ def get_prediction(model,image):
     _image = _image/255.0
     _image = np.expand_dims(_image, axis=0)
     prediction = model.predict([_image],)
-    acc = prediction[0][0]
-    print(acc)
-    print(prediction[0][1])
+    acc = max(prediction[0][0],prediction[0][1])
+    acc = math.floor(acc*100)/100
     result = "day" if prediction[0][1] > 0.5 else "night"
-    result_string = "Accuracy:{:.4f}, {}".format(acc,result)
+    result_string = "Accuracy:{:.2f}, {}".format(acc,result)
     return result_string
 
 
@@ -102,6 +102,7 @@ if __name__ == "__main__":
     label_array = [1 if x == "day" else 0 for x in label_array]
     label_array = np.array(label_array)
     y_test = to_categorical(label_array, num_classes=2) 
+    print("categorical",y_test)
     x_test = image_array
     print("Evaluate on extra_tests data")
     results = model.evaluate(x_test, y_test, batch_size=128)
