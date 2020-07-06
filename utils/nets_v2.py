@@ -1,6 +1,8 @@
 """
 	Author: Ahad Suleymanli
 
+    A two-imput day-night classification model
+
 """
 from keras.layers import Input, Dense
 from keras.models import Model

@@ -1,6 +1,9 @@
 """
 	Author: Ahad Suleymanli
 
+    handles inference requests
+    handles model loading in background when model change is requested
+
 """
 
 from abc import ABC

@@ -1,7 +1,7 @@
 ### Create the envs:
 - start your preffered virtual environment in project root
 - pip install -r requirements.txt
-- cd node_add && npm init
+- cd node_app && npm install .
 
 ### How to run:
 - run python inference_api.py in one shell
